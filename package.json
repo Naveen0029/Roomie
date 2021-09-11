@@ -1,0 +1,22 @@
+{
+  "name": "roomie",
+  "version": "1.0.0",
+  "description": "This is roomie web app",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js"
+  },
+  "author": "Naveen Bishnoi",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "bootstrap": "^5.1.0",
+    "bootstrap-social": "^5.1.1",
+    "express": "^4.17.1",
+    "font-awesome": "^4.7.0",
+    "jquery": "^3.6.0",
+    "popper.js": "^1.16.1",
+    "socket.io": "^4.1.3"
+  }
+}

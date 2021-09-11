@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./node_modules/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="./node_modules/bootstrap-social/bootstrap-social.css">
+    <link rel="stylesheet" href="./styles.css">
+    
+    <title>Roomie</title>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-3 col-sm-3"><h1>Roomie</h1></div>
+            </div>
+        </div>
+    </header> 
+
+    <div class="fluid-container">
+        <div class="row" id="name_block">
+            <div class="col-12 col-sm-6" id="name_bar" style="display: block;">
+                <label>Enter the name</label>
+                <input type="text" id="input_name"><br><br>
+                <label>Create Room</label>
+                <input type="text" id="createroom">
+                <button type="button"  id="input_btn1">Submit</button><br><br>
+                <b>Or</b><br><br>
+                <label>Join Room</label>
+                <input type="text" id="joinroom">
+                <button type="button"  id="input_btn2">Submit</button>
+            </div>
+
+        </div>
+
+        <div class="row" id="main_block">
+               <div class="col-3 col-sm-3" id="name_people">
+                    <h4>Joined People</h4>
+                    <div id="add_names">
+                      <!-- <p style="color: rgb(236, 31, 59);">Naveen</p>--> 
+                    </div>
+               </div>
+
+               <div class="col-9 col-sm-9">
+
+               </div>
+        </div>
+
+    </div>
+    
+    
+    
+    <script src="./node_modules/jquery/dist/jquery.slim.min.js"></script>
+    <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script defer src="/socket.io/socket.io.js"></script>   
+    <script defer src="./index.js"></script>
+</body>
+</html>
