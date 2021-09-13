@@ -44,19 +44,87 @@
                     </div>
                </div>
 
-               <div class="col-9 col-sm-9">
+               <div class="col-9 col-sm-9" id="transaction_details">
+                <div class="container" style="background-color: blanchedalmond;display: block;" id="who_pay">
+                    <h2 style="text-align: center;">Transactions Details</h2><br>
+        
+                    <div class="row" id="detail_heading">
+                        <div class="col-3 col-sm-3">
+                            <h3>Payer</h3>
+                        </div>
+                        <div class="col-3 col-sm-3">
+                            <h3>Description</h3>
+                        </div>
+                        <div class="col-3 col-sm-3">
+                            <h3>Amount</h3>
+                        </div>
+                        <div class="col-12 col-sm-3">
+                            <h3 style="text-align: center;">Add</h3>
+                        </div>
+        
+                    </div>
+                    <div class="row" id="print_details">
+                         <div class="col-3 col-sm-3" id="payer__name">
+                            <!-- <p >Naveen</p> --> 
+                         </div>
+                         <div class="col-3 col-sm-3" id="description">
+                            <!-- <p>paid at fruit shop</p> -->
+                        </div>
+                        <div class="col-3 col-sm-3" id="amount__detail">
+                           <!-- <p>Amount</p>-->
+                        </div>
+                        <div class="col-3 col-sm-3">
+                            <p></p>
+                        </div>
+                    </div>
+                    <div class="row" id="choose_people">
+                        <div class="col-3 col-sm-3" class="dropdown1">
+                            <select class="form-select" id="inlineFormSelectPref1">
+                                <option selected id="payerr">payer</option>
+                               <!-- <option value="1" id="payerr_1">Naveen</option>-->
+                            </select>
+                        </div>
+                        <div class="col-3 col-sm-3">
+                            <input type="text" id="detail_description">
+                        </div>
+                        <div class="col-3 col-sm-3">
+                            <div class="amount">
+                                <input type="number" id="added_amount">
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-3" style="text-align: center;" class="main_button">
+                            <button class="btn btn-primary" type="submit" id="get_details_button2">Add</button>
+                        </div>
+        
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-12 col-sm-3">
+                            <button class="btn btn-primary" type="submit" id="simply_details_button">Simplify It</button>
+                        </div>
+                        
+                    </div>
+                </div>
 
                </div>
         </div>
 
+        
+
     </div>
-    
+    <footer class="footer">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12 col-sm-4"><p>
+                    Copyright &copy 2021 <br> by Naveen Bishnoi</p></div>
+            </div>
+        </div>
+    </footer>
     
     
     <script src="./node_modules/jquery/dist/jquery.slim.min.js"></script>
     <script src="./node_modules/popper.js/dist/umd/popper.min.js"></script>
     <script src="./node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
     <script defer src="/socket.io/socket.io.js"></script>   
-    <script defer src="./index.js"></script>
+    <script type="module" defer src="./index.js"></script>
 </body>
 </html>

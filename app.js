@@ -27,6 +27,7 @@ const io= socketIO(server);
 
 const users = {};
 var rooms=[];
+var details=[];
 
 //whena a new user joins
 io.on('connection',socket=>{
@@ -45,33 +46,9 @@ io.on('connection',socket=>{
       }
       return allNames;
     }
-    socket.on('new-user-joined',(name,room)=>{
-        console.log("hey there");
-        users[socket.id] = name;
-        socket.join(room);
-        rooms.push(room);
-        const clients = io.sockets.adapter.rooms.get(room);//clients contain socket.id
-        
-        var allnames=getNames(clients);
-        io.in(room).emit('user-joined',allnames);//send the msg to all connected to this room
 
-    })
-
-    socket.on('add-user',(name,room)=>{
-        users[socket.id] = name;
-        socket.join(room);
-        const clients = io.sockets.adapter.rooms.get(room);//clients contain socket.id
-
-        var allnames=getNames(clients);//get all the names of user in the room
-        
-        io.in(room).emit('user-joined',allnames);//send the msg to all connected to this room
-
-    })
-    
-    //when a user leave let the other know
-    socket.on('disconnecting',message=>{
-        
-        var myRoom;
+    var getMyRoom=()=>{
+        let myRoom;
         for(let i=0;i<rooms.length;i++){//for finding the room of the user
             const clients = io.sockets.adapter.rooms.get(rooms[i]);
             if(clients==undefined)continue;
@@ -90,10 +67,47 @@ io.on('connection',socket=>{
             }
             if(flag)break;
         }
+        return myRoom;
+    }
+    socket.on('new-user-joined',(name,room)=>{
+        console.log("hey there");
+        users[socket.id] = name;
+        socket.join(room);
+        rooms.push(room);
+        const clients = io.sockets.adapter.rooms.get(room);//clients contain socket.id
+        
+        var allnames=getNames(clients);
+        io.in(room).emit('user-joined',allnames,details);//send the msg to all connected to this room
+
+    })
+
+    socket.on('add-user',(name,room)=>{
+        users[socket.id] = name;
+        socket.join(room);
+        const clients = io.sockets.adapter.rooms.get(room);//clients contain socket.id
+
+        var allnames=getNames(clients);//get all the names of user in the room
+        
+        io.in(room).emit('user-joined',allnames,details);//send the msg to all connected to this room
+        
+
+    })
+    
+    //when a user leave let the other know
+    socket.on('disconnecting',message=>{
+        
+        let myRoom=getMyRoom();
         io.in(myRoom).emit('leave',users[socket.id]);
         socket.leave(socket.room);   
         delete users[socket.id];  
           
+    })
+
+    socket.on('user-detail',Info=>{
+        
+        details.push(Info);
+        let myRoom=getMyRoom();
+        socket.to(myRoom).emit('someone-paid',Info);
     })
 
     

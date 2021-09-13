@@ -10,3 +10,12 @@
 #name_people{
     background-color: #75cda1;
 }
+
+.footer{
+    margin-top:550px;
+    margin-left: -50px;
+    margin-right:-50px;
+  background-color:#9575cd;
+  color: white;
+  text-align: center;
+}
