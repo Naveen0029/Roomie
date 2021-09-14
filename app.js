@@ -31,7 +31,7 @@ var details=[];
 
 //whena a new user joins
 io.on('connection',socket=>{
-    var findLen=(clients)=>{
+    var findLen=(clients)=>{// find the no of users joined
         var res=0;
         if(clients==undefined)return res;
         for(let clientId of clients)res++;
@@ -39,15 +39,17 @@ io.on('connection',socket=>{
         return res;
     }
 
-    var getNames=(clients)=>{
+    var getNames=(clients)=>{//all the user of this room
+        
         let allNames=[];
+        if(clients==undefined)return allNames;
         for(let clientId of clients){
             allNames.push(users[clientId]);
       }
       return allNames;
     }
 
-    var getMyRoom=()=>{
+    var getMyRoom=(leaves)=>{
         let myRoom;
         for(let i=0;i<rooms.length;i++){//for finding the room of the user
             const clients = io.sockets.adapter.rooms.get(rooms[i]);
@@ -59,7 +61,7 @@ io.on('connection',socket=>{
                 if(clientId==socket.id){
                     myRoom=rooms[i];
                     flag=true;
-                    if(result==1)rooms.splice(i,1);//when only 1 person is available and he is also leaving
+                    if(result==1&&leaves)rooms.splice(i,1);//when only 1 person is available and he is also leaving
                                                    //it means the room is going to empty so we have to remove 
                                                    //that room from rooms array
                     break;
@@ -96,20 +98,31 @@ io.on('connection',socket=>{
     //when a user leave let the other know
     socket.on('disconnecting',message=>{
         
-        let myRoom=getMyRoom();
+        let myRoom=getMyRoom(true);
         io.in(myRoom).emit('leave',users[socket.id]);
         socket.leave(socket.room);   
         delete users[socket.id];  
           
     })
-
+    //when a use buy some stuff then he wanted to add his detail at server
     socket.on('user-detail',Info=>{
         
         details.push(Info);
-        let myRoom=getMyRoom();
+        let myRoom=getMyRoom(false);
         socket.to(myRoom).emit('someone-paid',Info);
     })
-
+    
+    //when a user want to see that he is not out of budget.
+    socket.on('fetch-transactions',()=>{
+        console.log('i am here');
+        let myRoom=getMyRoom();
+        const clients = io.sockets.adapter.rooms.get(myRoom);
+        var allnames=getNames(clients);
+        io.to(socket.id).emit('get-transactions',details,allnames);//sending allnames of the 
+                                                                    //user joined the room because
+                                                                    // may be someone not pays money
+                                                                    //and details of who have paid
+    })
     
     
 })

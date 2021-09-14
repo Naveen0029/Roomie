@@ -8,7 +8,15 @@
     text-align: center;
 }
 #name_people{
-    background-color: #75cda1;
+    background-color:white;
+
+}
+#name_people.p{
+    background-color: tomato;
+}
+
+#simplified_details{
+    margin-top:60px;
 }
 
 .footer{
@@ -18,4 +26,10 @@
   background-color:#9575cd;
   color: white;
   text-align: center;
+}
+
+body{
+    background-color:lightblue;
+    
+  
 }

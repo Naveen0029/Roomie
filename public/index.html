@@ -37,15 +37,15 @@
         </div>
 
         <div class="row" id="main_block">
-               <div class="col-3 col-sm-3" id="name_people">
-                    <h4>Joined People</h4>
+               <div class="col-3 col-sm-1" id="name_people" style="display: none;">
+                    <h4 style="text-align: center;">Joined People</h4>
                     <div id="add_names">
                       <!-- <p style="color: rgb(236, 31, 59);">Naveen</p>--> 
                     </div>
                </div>
 
                <div class="col-9 col-sm-9" id="transaction_details">
-                <div class="container" style="background-color: blanchedalmond;display: block;" id="who_pay">
+                <div class="container" style="background-color: blanchedalmond;display: none;" id="who_pay">
                     <h2 style="text-align: center;">Transactions Details</h2><br>
         
                     <div class="row" id="detail_heading">
@@ -104,9 +104,48 @@
                         
                     </div>
                 </div>
-
+               </div>
+               <div class="col-2 col-sm-2" id="chat_box" style="display: none;">
+                   <div style="background-color: white;">
+                    <h4 style="text-align: center;">Chat Box</h4>
+                   </div>
                </div>
         </div>
+
+         <div class="row">
+             <div class="col-9 col-sm-9 offset-sm-1">
+                <div class="container" style="background-color: blanchedalmond;display: none;" id="simplified_details">
+                    <h2 style="text-align: center;">Simplified Details</h2><br>
+        
+                    <div class="row" id="simply_detail_heading">
+                        <div class="col-3 col-sm-3">
+                            <h3>Payer</h3>
+                        </div>
+                        <div class="col-3 col-sm-3">
+                            <h3>Payee</h3>
+                        </div>
+                        <div class="col-3 col-sm-3">
+                            <h3>Amount</h3>
+                        </div>
+                    </div>
+                    <div class="row" id="simply_print_details">
+                         <div class="col-3 col-sm-3"  id="simply_payer">
+                            <!--  <p>Naveen</p>  --> 
+                         </div>
+                         <div class="col-3 col-sm-3" id="simply_payee">
+                           <!-- <p >Kartik</p> --> 
+                        </div>
+                        <div class="col-3 col-sm-3" id="simply_amount_detail">
+                           <!-- <p >1000</p>  --> 
+                        </div>
+                        
+                    </div>
+                </div>
+
+             </div>
+
+         </div>
+        
 
         
 

@@ -1,5 +1,7 @@
 const socket=io();
 import {details} from './detail.js';
+import {myHeap} from './heap.js';
+import {payments} from './payments.js';
 
 const name=document.getElementById('input_name');
 const inputBtn2=document.getElementById('input_btn2');
@@ -15,6 +17,16 @@ const addedamountDetails=document.getElementById('added_amount');
 const payer_Name=document.getElementById('payer__name');
 const description_=document.getElementById('description');
 const amount_=document.getElementById('amount__detail');
+const MainBlock=document.getElementById('name_people');
+const TransactionBlock=document.getElementById('who_pay');
+const SfDbtn=document.getElementById('simply_details_button');
+const simpyfyBlock=document.getElementById('simplified_details');
+const chatBox=document.getElementById('chat_box');
+const simplyPayer=document.getElementById('simply_payer');
+const simplyPayee=document.getElementById('simply_payee');
+const simplyAmount=document.getElementById('simply_amount_detail');
+
+
 
 inputBtn1.addEventListener('click',(e)=>{//for creating room
     let nam=name.value;
@@ -23,6 +35,9 @@ inputBtn1.addEventListener('click',(e)=>{//for creating room
     createRoom.value="";
     socket.emit('new-user-joined',nam,crRoom);
     nameBar.style.display='none';
+    MainBlock.style.display='block';
+    TransactionBlock.style.display='block';
+    chatBox.style.display='block';
    
 })
 inputBtn2.addEventListener('click',(e)=>{//for joining room
@@ -32,8 +47,9 @@ inputBtn2.addEventListener('click',(e)=>{//for joining room
     joinRoom.value="";
     socket.emit('add-user',nam,joinR);
     nameBar.style.display='none';
- 
-
+    MainBlock.style.display='block';
+    TransactionBlock.style.display='block';
+    
 });
 
 addbtn.addEventListener('click',(e)=>{//for adding the details in ui
@@ -46,6 +62,14 @@ addbtn.addEventListener('click',(e)=>{//for adding the details in ui
     socket.emit('user-detail',new details(x,des,amount));
     clearFields(detDescription,addedamountDetails);
 })
+
+SfDbtn.addEventListener('click',(e)=>{
+    console.log('clicked sfdbtn');
+    socket.emit('fetch-transactions');
+    simpyfyBlock.style.display='block';
+})
+
+
 
 const append=(name,here)=>{//appends the child with p tag
     let ele=document.createElement('p');
@@ -111,7 +135,7 @@ socket.on('user-joined',(users,Info)=>{
     }
 })
 
-socket.on('someone-paid',det=>{
+socket.on('someone-paid',det=>{//someone had paid money-sever is saying
     append(det.payer,payer_Name);
     append(det.desc,description_);
     append(det.amount,amount_); 
@@ -120,4 +144,90 @@ socket.on('leave',(name)=>{
     console.log(name+" leaved the server");
      eraseName(name,addName);
      eraseName(name,dropdownnames);
+})
+socket.on('get-transactions',(trans,allnames)=>{
+    for(let i=0;i<trans.length;i++){//maybe someone paid money but he leaves the room
+        let temp=trans[i];
+        if(allnames.indexOf(temp.payer)==-1){
+            allnames.push(temp.payer);
+        }
+        
+    }
+    console.log(trans);
+    console.log(allnames);
+
+    var balance={};//who have paid 
+    var total=0;
+    for(let i=0;i<trans.length;i++){
+        let temp=trans[i];
+        if(temp.payer in balance){
+            balance[temp.payer]+=temp.amount;
+            total+=temp.amount;
+        }
+        else{
+            balance[temp.payer]=temp.amount;
+            total+=temp.amount;
+        }
+        
+    }
+    let n=allnames.length;
+    let eop=(total/n);
+    console.log(eop);
+
+    var net_balance={};
+    for(let i=0;i<allnames.length;i++){
+        let payer=allnames[i];
+        if(payer in balance){
+            net_balance[payer]=balance[payer]-eop;
+        }
+        else net_balance[payer]=(-1)*eop;
+
+        console.log(typeof(net_balance[payer]));
+    }
+
+    var positive=[];//for who have paid more than needed
+    var negative=[];//for who have paid less then needed
+    
+    for(const p in net_balance){
+        if(net_balance[p]>0){
+            myHeap.push_heap(positive,net_balance[p],p);
+        }
+        else{
+            myHeap.push_heap(negative,-1*net_balance[p],p);
+        }
+   }
+   
+    var result = [];//array of expense objects
+    console.log(positive);
+    console.log(negative);
+    while (positive.length > 0&&negative.length>0) {
+        var p1 = myHeap.heap_top(positive);
+        var p2 = myHeap.heap_top(negative);
+        console.log(p1);
+        console.log(p2);
+        myHeap.pop_heap(positive);
+        myHeap.pop_heap(negative);
+        let exp = new payments(p2.second, p1.second, Math.min(p1.first, p2.first));
+
+        result.push(exp);
+        if (p1.first > p2.first) {
+            myHeap.push_heap(positive, p1.first - p2.first, p1.second);
+        } else if (p1.first < p2.first) {
+            myHeap.push_heap(negative, p2.first - p1.first, p2.second);
+        }
+    }
+            
+    console.log(result);
+    if(result.length>0){
+        erase(simplyPayer);
+        erase(simplyPayee);
+        erase(simplyAmount);
+        for(let i=0;i<result.length;i++){
+            append(result[i].payer,simplyPayer);
+            append(result[i].payee,simplyPayee);
+            append(result[i].amount,simplyAmount); 
+        }
+    }
+
+   
 })
