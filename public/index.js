@@ -25,6 +25,9 @@ const chatBox=document.getElementById('chat_box');
 const simplyPayer=document.getElementById('simply_payer');
 const simplyPayee=document.getElementById('simply_payee');
 const simplyAmount=document.getElementById('simply_amount_detail');
+const sendbtn=document.getElementById('sendbtn');
+const messageInput=document.getElementById('messageInput');
+const sendCont=document.getElementById('send-container');
 
 
 
@@ -49,7 +52,7 @@ inputBtn2.addEventListener('click',(e)=>{//for joining room
     nameBar.style.display='none';
     MainBlock.style.display='block';
     TransactionBlock.style.display='block';
-    
+    chatBox.style.display='block';
 });
 
 addbtn.addEventListener('click',(e)=>{//for adding the details in ui
@@ -116,7 +119,7 @@ const clearFields=(a,b)=>{
      
 }
 
-socket.on('user-joined',(users,Info)=>{
+socket.on('user-joined',(nam,users,Info)=>{
     erase(addName);//handling group names
     for(let name of users){
         append(name,addName);
@@ -133,6 +136,8 @@ socket.on('user-joined',(users,Info)=>{
             append(Info[i].amount,amount_); 
         }
     }
+    
+    appends(`${nam}:joined the chat`,'left');
 })
 
 socket.on('someone-paid',det=>{//someone had paid money-sever is saying
@@ -144,6 +149,8 @@ socket.on('leave',(name)=>{
     console.log(name+" leaved the server");
      eraseName(name,addName);
      eraseName(name,dropdownnames);
+
+     appends(`${name}:left the chat`,'left');//appends name in chat box
 })
 socket.on('get-transactions',(trans,allnames)=>{
     for(let i=0;i<trans.length;i++){//maybe someone paid money but he leaves the room
@@ -230,4 +237,38 @@ socket.on('get-transactions',(trans,allnames)=>{
     }
 
    
+})
+
+
+//play sound when a user write the message
+function play() {
+    var audio = new Audio('https://pl3dxz-a.akamaihd.net/downloads/ringtones/files/mp3/twitter-bird-dceb51f6-7561-3a2e-89a2-aad53695e412-53702.mp3');
+    audio.play();
+  }
+
+//The message written is shown in container
+const appends = (message,position)=>{
+    const messageElement = document.createElement('div');
+    messageElement.innerText=message;
+    messageElement.classList.add('message');
+    messageElement.classList.add(position);
+    sendCont.append(messageElement);
+
+}
+
+
+//when we click on send button we send the msg to server so that he send the msg to 
+//everone who is connected with server
+sendbtn.addEventListener('click',(e)=>{
+    e.preventDefault();//page does not reload
+    const message=messageInput.value;
+    appends(`You:${message}`,'left');
+    socket.emit('send',message);
+    messageInput.value='';
+   
+})
+
+socket.on('recieve',data=>{
+    appends(`${data.name}:${data.message}`,'left');
+    play();
 })

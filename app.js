@@ -79,7 +79,7 @@ io.on('connection',socket=>{
         const clients = io.sockets.adapter.rooms.get(room);//clients contain socket.id
         
         var allnames=getNames(clients);
-        io.in(room).emit('user-joined',allnames,details);//send the msg to all connected to this room
+        io.in(room).emit('user-joined',name,allnames,details);//send the msg to all connected to this room
 
     })
 
@@ -90,7 +90,8 @@ io.on('connection',socket=>{
 
         var allnames=getNames(clients);//get all the names of user in the room
         
-        io.in(room).emit('user-joined',allnames,details);//send the msg to all connected to this room
+        io.in(room).emit('user-joined',name,allnames,details);//send the msg to all connected to this room
+        
         
 
     })
@@ -123,6 +124,14 @@ io.on('connection',socket=>{
                                                                     // may be someone not pays money
                                                                     //and details of who have paid
     })
+
+
+        //when a user send the message let the other to know that someone sends the msg
+        socket.on('send',message=>{
+            let myRoom=getMyRoom();
+            socket.to(myRoom).emit('recieve',{message:message,name:users[socket.id]});//send the msg to all connected
+                                                                               // in chat-box   
+        })
     
     
 })

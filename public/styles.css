@@ -1,6 +1,7 @@
 .header{
     
     margin-bottom: 40px;
+    margin-right: -50px;
     background: #9575cd;
     color:floralwhite;
 }
@@ -30,6 +31,42 @@
 
 body{
     background-color:lightblue;
-    
-  
 }
+
+
+
+@media (max-width: 577px) {
+    .add_it{
+        display: none;
+    }
+    #chat_box{
+      display: none;
+    }
+    #main_block{
+        margin-right:-60px;
+    }
+    #simplified_details{
+        margin-left: 20px;
+        margin-right: 20px;
+    }
+    #simply__btn{
+        justify-content: start;
+    }
+  }
+
+  #send-container{
+    display: block;
+    height: 400px;
+    background-color: yellow;
+}
+
+
+.left{
+    float: left;
+    clear:both;
+ }
+ 
+ .right{
+    float:right;
+    clear:both;
+ }

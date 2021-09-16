@@ -37,14 +37,14 @@
         </div>
 
         <div class="row" id="main_block">
-               <div class="col-3 col-sm-1" id="name_people" style="display: none;">
+               <div class="col-12 col-sm-1" id="name_people" style="display: none;">
                     <h4 style="text-align: center;">Joined People</h4>
                     <div id="add_names">
                       <!-- <p style="color: rgb(236, 31, 59);">Naveen</p>--> 
                     </div>
                </div>
 
-               <div class="col-9 col-sm-9" id="transaction_details">
+               <div class="col-12 col-sm-7" id="transaction_details">
                 <div class="container" style="background-color: blanchedalmond;display: none;" id="who_pay">
                     <h2 style="text-align: center;">Transactions Details</h2><br>
         
@@ -52,44 +52,42 @@
                         <div class="col-3 col-sm-3">
                             <h3>Payer</h3>
                         </div>
-                        <div class="col-3 col-sm-3">
+                        <div class="col-5 col-sm-3">
                             <h3>Description</h3>
                         </div>
-                        <div class="col-3 col-sm-3">
+                        <div class="col-4 col-sm-3">
                             <h3>Amount</h3>
                         </div>
-                        <div class="col-12 col-sm-3">
-                            <h3 style="text-align: center;">Add</h3>
-                        </div>
+                        
         
                     </div>
                     <div class="row" id="print_details">
-                         <div class="col-3 col-sm-3" id="payer__name">
+                         <div class="col-4 col-sm-3" id="payer__name">
                             <!-- <p >Naveen</p> --> 
                          </div>
-                         <div class="col-3 col-sm-3" id="description">
+                         <div class="col-4 col-sm-3" id="description">
                             <!-- <p>paid at fruit shop</p> -->
                         </div>
-                        <div class="col-3 col-sm-3" id="amount__detail">
+                        <div class="col-4 col-sm-3" id="amount__detail">
                            <!-- <p>Amount</p>-->
                         </div>
-                        <div class="col-3 col-sm-3">
+                        <div class="col-12 col-sm-3">
                             <p></p>
                         </div>
                     </div>
                     <div class="row" id="choose_people">
-                        <div class="col-3 col-sm-3" class="dropdown1">
+                        <div class="col-12 col-sm-3" class="dropdown1">
                             <select class="form-select" id="inlineFormSelectPref1">
                                 <option selected id="payerr">payer</option>
                                <!-- <option value="1" id="payerr_1">Naveen</option>-->
                             </select>
                         </div>
-                        <div class="col-3 col-sm-3">
-                            <input type="text" id="detail_description">
+                        <div class="col-12 col-sm-3">
+                            <input type="text" id="detail_description" style="width: 100%;" placeholder="Description">
                         </div>
-                        <div class="col-3 col-sm-3">
+                        <div class="col-12 col-sm-3">
                             <div class="amount">
-                                <input type="number" id="added_amount">
+                                <input type="number" id="added_amount" style="width: 100%;" placeholder="amount">
                             </div>
                         </div>
                         <div class="col-12 col-sm-3" style="text-align: center;" class="main_button">
@@ -97,45 +95,61 @@
                         </div>
         
                     </div>
-                    <div class="row justify-content-center">
-                        <div class="col-12 col-sm-3">
-                            <button class="btn btn-primary" type="submit" id="simply_details_button">Simplify It</button>
+                    <div class="row justify-content-center" id="simply__btn">
+                        <div class="col-3 col-sm-3">
+                            <button class="btn btn-primary" type="submit" id="simply_details_button">Simplify</button>
                         </div>
                         
                     </div>
                 </div>
                </div>
-               <div class="col-2 col-sm-2" id="chat_box" style="display: none;">
-                   <div style="background-color: white;">
-                    <h4 style="text-align: center;">Chat Box</h4>
+               <div class="col-12 col-sm-4" id="chat_box" style="display: none;">
+                   
+                   <div class="row">
+                    <div class="col-12 col-sm-12" style="background-color: white;">
+                        <h4 style="text-align: center;">Chat Box</h4>
+                    </div>
+
+                    <div class="col-12 col-sm-12" id="send-container">
+
+
+                    </div>
+                    <div class="col-12 col-sm-10">
+                        <input type="text" id="messageInput" style="width: 100%;"> 
+                    </div>
+                    <div class="col-12 col-sm-2">
+                        <button class="btn btn-primary btn-sm" type="submit" id="sendbtn" style="width: 100%;text-align: center;">Send</button>
+
+                    </div>
                    </div>
+                    
                </div>
         </div>
 
          <div class="row">
-             <div class="col-9 col-sm-9 offset-sm-1">
+             <div class="col-12 col-sm-9 offset-sm-1">
                 <div class="container" style="background-color: blanchedalmond;display: none;" id="simplified_details">
                     <h2 style="text-align: center;">Simplified Details</h2><br>
         
                     <div class="row" id="simply_detail_heading">
-                        <div class="col-3 col-sm-3">
+                        <div class="col-4 col-sm-3">
                             <h3>Payer</h3>
                         </div>
-                        <div class="col-3 col-sm-3">
+                        <div class="col-4 col-sm-3">
                             <h3>Payee</h3>
                         </div>
-                        <div class="col-3 col-sm-3">
+                        <div class="col-4 col-sm-3">
                             <h3>Amount</h3>
                         </div>
                     </div>
                     <div class="row" id="simply_print_details">
-                         <div class="col-3 col-sm-3"  id="simply_payer">
+                         <div class="col-4 col-sm-3"  id="simply_payer">
                             <!--  <p>Naveen</p>  --> 
                          </div>
-                         <div class="col-3 col-sm-3" id="simply_payee">
+                         <div class="col-4 col-sm-3" id="simply_payee">
                            <!-- <p >Kartik</p> --> 
                         </div>
-                        <div class="col-3 col-sm-3" id="simply_amount_detail">
+                        <div class="col-4 col-sm-3" id="simply_amount_detail">
                            <!-- <p >1000</p>  --> 
                         </div>
                         
