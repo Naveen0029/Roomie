@@ -58,7 +58,21 @@ inputBtn2.addEventListener('click',(e)=>{//for joining room
 addbtn.addEventListener('click',(e)=>{//for adding the details in ui
     let x=dropdownnames.options[dropdownnames.selectedIndex].textContent;
     let des=detDescription.value;
-    let amount=parseInt(addedamountDetails.value);
+    let amount=addedamountDetails.value;
+    if(x=='Payer'){
+        alert("Please add a valid name.");
+        return;
+    }
+    if(des==""){
+        alert('Please add a valid description.');
+        return;
+    }
+  
+    if(amount==""){
+        alert('Please add a valid amount.');
+        return ;
+    }
+     amount=parseInt(amount);
     append(x,payer_Name);
     append(des,description_);
     append(amount,amount_);  

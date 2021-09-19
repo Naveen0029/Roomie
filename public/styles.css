@@ -10,6 +10,7 @@
 }
 #name_people{
     background-color:white;
+    margin-bottom:20px;
 
 }
 #name_people.p{
@@ -52,6 +53,12 @@ body{
     #simply__btn{
         justify-content: start;
     }
+    #get_details_button2{
+        margin-top: 10px;
+    }
+    #chat_box{
+        margin-top: 20px;
+    }
   }
 
   #send-container{
@@ -70,3 +77,13 @@ body{
     float:right;
     clear:both;
  }
+
+ #add_names{
+     text-align: center;
+ }
+
+ #simply_details_button{
+     margin-top: 20px;
+ }
+
+ 
