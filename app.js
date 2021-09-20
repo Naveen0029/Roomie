@@ -27,7 +27,7 @@ const io= socketIO(server);
 
 const users = {};
 var rooms=[];
-var details=[];
+var details={};
 
 //whena a new user joins
 io.on('connection',socket=>{
@@ -78,19 +78,30 @@ io.on('connection',socket=>{
         rooms.push(room);
         const clients = io.sockets.adapter.rooms.get(room);//clients contain socket.id
         
+     
+        if(details[room]==undefined){
+            details[room]=[];
+        }
+     
         var allnames=getNames(clients);
-        io.in(room).emit('user-joined',name,allnames,details);//send the msg to all connected to this room
+        io.in(room).emit('user-joined',name,allnames,details[room]);//send the msg to all connected to this room
 
     })
 
     socket.on('add-user',(name,room)=>{
+        console.log(details);
         users[socket.id] = name;
         socket.join(room);
         const clients = io.sockets.adapter.rooms.get(room);//clients contain socket.id
-
+        
+     
+        if(details[room]==undefined){
+            details[room]=[];
+        }
+        
         var allnames=getNames(clients);//get all the names of user in the room
         
-        io.in(room).emit('user-joined',name,allnames,details);//send the msg to all connected to this room
+        io.in(room).emit('user-joined',name,allnames,details[room]);//send the msg to all connected to this room
         
         
 
@@ -108,8 +119,13 @@ io.on('connection',socket=>{
     //when a use buy some stuff then he wanted to add his detail at server
     socket.on('user-detail',Info=>{
         
-        details.push(Info);
+        
         let myRoom=getMyRoom(false);
+        if(details[myRoom]==undefined){
+            details[myRoom]=[];
+        }
+        
+        details[myRoom].push(Info);
         socket.to(myRoom).emit('someone-paid',Info);
     })
     
@@ -119,7 +135,10 @@ io.on('connection',socket=>{
         let myRoom=getMyRoom();
         const clients = io.sockets.adapter.rooms.get(myRoom);
         var allnames=getNames(clients);
-        io.to(socket.id).emit('get-transactions',details,allnames);//sending allnames of the 
+        if(details[myRoom]==undefined){
+            details[myRoom]=[];
+        }
+        io.to(socket.id).emit('get-transactions',details[myRoom],allnames);//sending allnames of the 
                                                                     //user joined the room because
                                                                     // may be someone not pays money
                                                                     //and details of who have paid
@@ -131,6 +150,25 @@ io.on('connection',socket=>{
             let myRoom=getMyRoom();
             socket.to(myRoom).emit('recieve',{message:message,name:users[socket.id]});//send the msg to all connected
                                                                                // in chat-box   
+        })
+
+        socket.on('check',(room,name,CreorJoin,fn)=>{//before entring user checks if the room already exists or not
+             
+            if(CreorJoin&&rooms.indexOf(room)!=-1){// when user creating new Room
+                 fn({result:true,msg:'Room is already created'});
+             }
+             else if(!CreorJoin&&rooms.indexOf(room)==-1){//when user joining Room
+                 fn({result:true,msg:'Room not available'});
+             }
+             else{
+                const clients = io.sockets.adapter.rooms.get(room);//clients contain socket.id
+        
+                var allnames=getNames(clients);
+                 if(allnames.indexOf(name)!=-1){//check with same name user available or not
+                     fn({result:true,msg:'Already a user available'});
+                 }
+                 else fn({result:false,msg:'Everything is Perfect'});
+             }
         })
     
     

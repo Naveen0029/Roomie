@@ -28,6 +28,7 @@ const simplyAmount=document.getElementById('simply_amount_detail');
 const sendbtn=document.getElementById('sendbtn');
 const messageInput=document.getElementById('messageInput');
 const sendCont=document.getElementById('send-container');
+const chatRoom=document.getElementById('chat_Room');
 
 
 
@@ -36,11 +37,23 @@ inputBtn1.addEventListener('click',(e)=>{//for creating room
     name.value="";
     var crRoom=createRoom.value;
     createRoom.value="";
-    socket.emit('new-user-joined',nam,crRoom);
-    nameBar.style.display='none';
-    MainBlock.style.display='block';
-    TransactionBlock.style.display='block';
-    chatBox.style.display='block';
+    socket.emit('check',crRoom,nam,true,(data)=>{//emitting with callback function check the room 
+                                                 //is available or not
+        if(data.result){
+            alert(data.msg);
+            return;
+        }
+        else{
+            socket.emit('new-user-joined',nam,crRoom);
+            chatRoom.textContent="Chat Box-"+crRoom;
+            nameBar.style.display='none';
+            MainBlock.style.display='block';
+            TransactionBlock.style.display='block';
+            chatBox.style.display='block';
+        }
+
+    });
+    
    
 })
 inputBtn2.addEventListener('click',(e)=>{//for joining room
@@ -48,11 +61,22 @@ inputBtn2.addEventListener('click',(e)=>{//for joining room
     name.value="";
     var joinR=joinRoom.value;
     joinRoom.value="";
-    socket.emit('add-user',nam,joinR);
-    nameBar.style.display='none';
-    MainBlock.style.display='block';
-    TransactionBlock.style.display='block';
-    chatBox.style.display='block';
+    socket.emit('check',joinR,nam,false,(data)=>{//emitting with callback function check the room 
+                                                 //is available or not
+        if(data.result){
+            alert(data.msg);
+            return;
+        }
+        else{
+            socket.emit('add-user',nam,joinR);
+            chatRoom.textContent="Chat Box-"+joinR;
+            nameBar.style.display='none';
+            MainBlock.style.display='block';
+            TransactionBlock.style.display='block';
+            chatBox.style.display='block';
+        }
+
+    });
 });
 
 addbtn.addEventListener('click',(e)=>{//for adding the details in ui
