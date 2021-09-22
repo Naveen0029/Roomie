@@ -72,7 +72,7 @@ io.on('connection',socket=>{
         return myRoom;
     }
     socket.on('new-user-joined',(name,room)=>{
-        console.log("hey there");
+       
         users[socket.id] = name;
         socket.join(room);
         rooms.push(room);
@@ -89,7 +89,7 @@ io.on('connection',socket=>{
     })
 
     socket.on('add-user',(name,room)=>{
-        console.log(details);
+       
         users[socket.id] = name;
         socket.join(room);
         const clients = io.sockets.adapter.rooms.get(room);//clients contain socket.id
@@ -131,7 +131,7 @@ io.on('connection',socket=>{
     
     //when a user want to see that he is not out of budget.
     socket.on('fetch-transactions',()=>{
-        console.log('i am here');
+       
         let myRoom=getMyRoom();
         const clients = io.sockets.adapter.rooms.get(myRoom);
         var allnames=getNames(clients);

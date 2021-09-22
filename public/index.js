@@ -105,7 +105,7 @@ addbtn.addEventListener('click',(e)=>{//for adding the details in ui
 })
 
 SfDbtn.addEventListener('click',(e)=>{
-    console.log('clicked sfdbtn');
+   
     socket.emit('fetch-transactions');
     simpyfyBlock.style.display='block';
 })
@@ -184,7 +184,7 @@ socket.on('someone-paid',det=>{//someone had paid money-sever is saying
     append(det.amount,amount_); 
 })
 socket.on('leave',(name)=>{
-    console.log(name+" leaved the server");
+    
      eraseName(name,addName);
      eraseName(name,dropdownnames);
 
@@ -198,9 +198,7 @@ socket.on('get-transactions',(trans,allnames)=>{
         }
         
     }
-    console.log(trans);
-    console.log(allnames);
-
+   
     var balance={};//who have paid 
     var total=0;
     for(let i=0;i<trans.length;i++){
@@ -217,7 +215,7 @@ socket.on('get-transactions',(trans,allnames)=>{
     }
     let n=allnames.length;
     let eop=(total/n);
-    console.log(eop);
+   
 
     var net_balance={};
     for(let i=0;i<allnames.length;i++){
@@ -227,7 +225,7 @@ socket.on('get-transactions',(trans,allnames)=>{
         }
         else net_balance[payer]=(-1)*eop;
 
-        console.log(typeof(net_balance[payer]));
+       
     }
 
     var positive=[];//for who have paid more than needed
@@ -243,13 +241,11 @@ socket.on('get-transactions',(trans,allnames)=>{
    }
    
     var result = [];//array of expense objects
-    console.log(positive);
-    console.log(negative);
+
     while (positive.length > 0&&negative.length>0) {
         var p1 = myHeap.heap_top(positive);
         var p2 = myHeap.heap_top(negative);
-        console.log(p1);
-        console.log(p2);
+      
         myHeap.pop_heap(positive);
         myHeap.pop_heap(negative);
         let exp = new payments(p2.second, p1.second, Math.min(p1.first, p2.first));
@@ -262,7 +258,7 @@ socket.on('get-transactions',(trans,allnames)=>{
         }
     }
             
-    console.log(result);
+   
     if(result.length>0){
         erase(simplyPayer);
         erase(simplyPayee);
@@ -270,7 +266,7 @@ socket.on('get-transactions',(trans,allnames)=>{
         for(let i=0;i<result.length;i++){
             append(result[i].payer,simplyPayer);
             append(result[i].payee,simplyPayee);
-            append(result[i].amount,simplyAmount); 
+            append(parseFloat(result[i].amount).toFixed(2),simplyAmount); 
         }
     }
 

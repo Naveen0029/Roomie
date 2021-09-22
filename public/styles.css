@@ -37,12 +37,7 @@ body{
 
 
 @media (max-width: 577px) {
-    .add_it{
-        display: none;
-    }
-    #chat_box{
-      display: none;
-    }
+   
     #main_block{
         margin-right:-60px;
     }
@@ -50,21 +45,26 @@ body{
         margin-left: 20px;
         margin-right: 20px;
     }
-    #simply__btn{
-        justify-content: start;
-    }
+
     #get_details_button2{
         margin-top: 10px;
     }
     #chat_box{
         margin-top: 20px;
+        
     }
   }
-
+  #Roomie{
+      margin-left: 10px;
+  }
   #send-container{
+    padding-left: 20px;
     display: block;
     height: 400px;
     background-color: yellow;
+    margin-left: 10px;
+    overflow-y: auto;
+  
 }
 
 
@@ -84,6 +84,23 @@ body{
 
  #simply_details_button{
      margin-top: 20px;
+ }
+
+ #messageInput{
+    width:105%;
+    border:2px solid black;
+    border-radius: 6px;
+    height: 34px;
+    font-size:22px;
+ }
+
+ #sendbtn{
+    width:100%;
+    cursor: pointer;
+    border: 2px solid black;
+    border-radius: 6px;
+    height: 34px;
+    text-align: center;
  }
 
  
