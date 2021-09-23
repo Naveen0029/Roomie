@@ -111,6 +111,10 @@ io.on('connection',socket=>{
     socket.on('disconnecting',message=>{
         
         let myRoom=getMyRoom(true);
+        const clients = io.sockets.adapter.rooms.get(myRoom);
+        if(findLen(clients)<=1){
+            delete details[myRoom];
+        }
         io.in(myRoom).emit('leave',users[socket.id]);
         socket.leave(socket.room);   
         delete users[socket.id];  
